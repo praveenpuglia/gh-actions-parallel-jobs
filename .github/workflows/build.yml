@@ -22,7 +22,7 @@ jobs:
         run: npm ci
 
       - name : List files in .npm dir
-        run : ls -la ~/.npm
+        run : ls -la ${{ github.workspace }} && echo ${{ github.workspace }}
 
       - name: Cache node modules
         id: cache-nodemodules
