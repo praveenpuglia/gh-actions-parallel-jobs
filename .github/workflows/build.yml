@@ -21,6 +21,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name : List files in .npm dir
+        run : ls -la ~/.npm
+
       - name: Cache node modules
         id: cache-nodemodules
         uses: actions/cache@v4
@@ -35,17 +38,6 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: List files
-        run: ls -la /home/runner/work/parallel-actions/parallel-actions
-
       - name: Cache node modules
         id: cache-nodemodules
         uses: actions/cache@v4
@@ -56,6 +48,9 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
+      - name: List files
+        run: ls -la /home/runner/work/parallel-actions/parallel-actions
+
       - name: Run build with Broker A
         env:
           BROKER: broker_a
@@ -65,14 +60,6 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
       - name: Cache node modules
         id: cache-nodemodules
         uses: actions/cache@v4
