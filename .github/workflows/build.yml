@@ -1,0 +1,96 @@
+name: Build and Parallel Jobs Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Store node_modules
+        run: |
+          tar -czf node_modules.tar.gz node_modules
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+      
+      - name: Upload node_modules artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: node_modules
+          path: node_modules.tar.gz
+
+  job_1:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Download node_modules artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: node_modules
+
+      - name: Extract node_modules
+        run: |
+          tar -xzf node_modules.tar.gz
+
+      - name: Run build with Broker A
+        env:
+          BROKER: broker_a
+        run: npm run build:prod
+
+  job_2:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Download node_modules artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: node_modules
+
+      - name: Extract node_modules
+        run: |
+          tar -xzf node_modules.tar.gz
+
+      - name: Run build with Broker B
+        env:
+          BROKER: broker_b
+        run: npm run build:prod
+
+  # Add more jobs as needed, using the same structure as job_1 and job_2.
