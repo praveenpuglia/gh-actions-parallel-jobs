@@ -21,14 +21,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name : List files in .npm dir
-        run : ls -la ${{ github.workspace }} && echo ${{ github.workspace }}
-
       - name: Cache node modules
         id: cache-nodemodules
         uses: actions/cache@v4
         with:
-          path: ~/.npm
+          path: ${{ github.workspace }}
           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-
@@ -42,7 +39,7 @@ jobs:
         id: cache-nodemodules
         uses: actions/cache@v4
         with:
-          path: ~/.npm
+          path: ${{ github.workspace }}
           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-
