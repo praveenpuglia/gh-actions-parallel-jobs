@@ -50,7 +50,7 @@ jobs:
           BROKER: batman
         run: npm run build
 
-  job_2:
+  build_superman:
     needs: setup
     runs-on: ubuntu-latest
     steps:
