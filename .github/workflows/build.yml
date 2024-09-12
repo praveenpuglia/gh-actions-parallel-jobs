@@ -22,7 +22,7 @@ jobs:
         run: npm ci
 
       - name: Cache node modules
-        id: cache-nodemodules
+        id: cache-base-dir
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}
@@ -31,12 +31,12 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-  job_1:
+  build_batman:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - name: Cache node modules
-        id: cache-nodemodules
+      - name: bring in cache
+        id: cache-base-dir
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}
@@ -45,31 +45,26 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: List files
-        run: ls -la /home/runner/work/parallel-actions/parallel-actions
-
-      - name: Run build with Broker A
+      - name: build
         env:
-          BROKER: broker_a
+          BROKER: batman
         run: npm run build
 
   job_2:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - name: Cache node modules
-        id: cache-nodemodules
+      - name: bring in cache
+        id: cache-base-dir
         uses: actions/cache@v4
         with:
-          path: ~/.npm
+          path: ${{ github.workspace }}
           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Run build with Broker B
+      - name: build
         env:
-          BROKER: broker_b
+          BROKER: superman
         run: npm run build
-
-  # Add more jobs as needed, using the same structure as job_1 and job_2.
