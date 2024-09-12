@@ -42,14 +42,14 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Download node_modules artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
+      # - name: Download node_modules artifact
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: node_modules
 
-      - name: Extract node_modules
-        run: |
-          tar -xzf node_modules.tar.gz
+      # - name: Extract node_modules
+      #   run: |
+      #     tar -xzf node_modules.tar.gz
 
       - name: Run build with Broker A
         env:
@@ -68,14 +68,14 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Download node_modules artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
+      # - name: Download node_modules artifact
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: node_modules
 
-      - name: Extract node_modules
-        run: |
-          tar -xzf node_modules.tar.gz
+      # - name: Extract node_modules
+      #   run: |
+      #     tar -xzf node_modules.tar.gz
 
       - name: Run build with Broker B
         env:
