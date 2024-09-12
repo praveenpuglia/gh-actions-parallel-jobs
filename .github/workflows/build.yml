@@ -40,6 +40,7 @@ jobs:
         with:
           name: node_modules
           path: node_modules.tar.gz
+          retention-days: 1
 
   job_1:
     needs: setup
@@ -65,7 +66,7 @@ jobs:
       - name: Run build with Broker A
         env:
           BROKER: broker_a
-        run: npm run build:prod
+        run: npm run build
 
   job_2:
     needs: setup
@@ -91,6 +92,6 @@ jobs:
       - name: Run build with Broker B
         env:
           BROKER: broker_b
-        run: npm run build:prod
+        run: npm run build
 
   # Add more jobs as needed, using the same structure as job_1 and job_2.
