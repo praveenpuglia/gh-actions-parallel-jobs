@@ -5,13 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:prod": "echo \"Building production...\" with broker $BROKER"
+    "build": "echo \"Building production...\" with broker $BROKER && rm -rf dist && tsc && cat dist/index.js && echo \"Finished building \n\n\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^22.5.4",
     "add": "^2.0.6",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.17.21",
+    "typescript": "^5.6.2"
   }
 }
