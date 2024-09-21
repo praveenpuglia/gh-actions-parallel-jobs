@@ -25,7 +25,7 @@ jobs:
         id: cache-base-dir
         uses: actions/cache@v4
         with:
-          path: ${{ github.workspace }}
+          path: ${{ github.workspace }}/node_modules
           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-
@@ -39,7 +39,7 @@ jobs:
         id: cache-base-dir
         uses: actions/cache@v4
         with:
-          path: ${{ github.workspace }}
+          path: ${{ github.workspace }}/node_modules
           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-
@@ -58,7 +58,7 @@ jobs:
         id: cache-base-dir
         uses: actions/cache@v4
         with:
-          path: ${{ github.workspace }}
+          path: ${{ github.workspace }}/node_modules
           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-
