@@ -1,4 +1,4 @@
-name: Build and Parallel Jobs Workflow
+name: Parallel Builds using Cache
 
 on:
   push:

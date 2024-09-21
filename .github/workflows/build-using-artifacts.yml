@@ -1,0 +1,87 @@
+name: Parallel Builds using Artifacts
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  setup:
+    name: Base Setup 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Store node_modules
+        run: |
+          tar -czf node_modules.tar.gz node_modules
+
+      - name: Upload node_modules artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules.tar.gz
+
+  build_batman:
+    name: Build Batman
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Download node_modules artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+
+      - name: Extract node_modules
+        run: |
+          tar -xzf node_modules.tar.gz
+
+      - name: Run build with Broker A
+        env:
+          SUPERHERO: batman
+        run: npm run build
+
+  build_superman:
+    name: Build Superman
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Download node_modules artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+
+      - name: Extract node_modules
+        run: |
+          tar -xzf node_modules.tar.gz
+
+      - name: Run build with Broker A
+        env:
+          SUPERHERO: superman
+        run: npm run build
