@@ -8,6 +8,7 @@ on:
 
 jobs:
   setup:
+    name: Base Setup
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -21,10 +22,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Cache node modules
+      - name: Cache/Restore node_modules
         id: cache-base-dir
         uses: actions/cache@v4
         with:
+          # github.workspace points to the directory where the project is checked out
           path: ${{ github.workspace }}/node_modules
           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
@@ -32,10 +34,14 @@ jobs:
             ${{ runner.os }}-
 
   build_batman:
+    name: 'Build Batman'
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - name: bring in cache
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Restore node_modules
         id: cache-base-dir
         uses: actions/cache@v4
         with:
@@ -45,16 +51,20 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: build
+      - name: Build
         env:
-          BROKER: batman
+          SUPERHERO: batman
         run: npm run build
 
   build_superman:
+    name: 'Build Superman'
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - name: bring in cache
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Restore node_modules
         id: cache-base-dir
         uses: actions/cache@v4
         with:
@@ -64,7 +74,7 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: build
+      - name: Build
         env:
-          BROKER: superman
+          SUPERHERO: superman
         run: npm run build

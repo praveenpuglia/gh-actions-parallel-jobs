@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo \"Building production...\" with broker $BROKER && rm -rf dist && tsc && cat dist/index.js && echo \"Finished building \n\n\""
+    "build": "echo \"Building production...\" with broker $SUPERHERO && rm -rf dist && tsc && cat dist/index.js && echo \"Finished building \n\n\""
   },
   "keywords": [],
   "author": "",
