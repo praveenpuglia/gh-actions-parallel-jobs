@@ -31,6 +31,8 @@ jobs:
         with:
           name: node_modules
           path: node_modules.tar.gz
+          # Keep the artifact lying around for 1 day max. 
+          retention-days: 1
 
   build_batman:
     name: Build Batman
