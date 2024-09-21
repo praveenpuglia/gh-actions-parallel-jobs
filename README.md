@@ -15,4 +15,4 @@ Check [build-using-artifacts.yml](./.github/workflows/build-using-artifacts.yml)
 In this approach, we use the https://github.com/actions/cache action to cache the `node_modules` directory across jobs. We cache the directory against the has of the package-lock.json file and as long as the lock file hasn't changed, the same cache of `node_modules` is used.
 This approach is at least as optimized as the artifacts approach since package-lock.json file doesn't always change with every run of the workflow in the real world.
 
-Check [build-using-cache.yml](./.github/workflows/build-using-artifacts.yml).
+Check [build-using-cache.yml](./.github/workflows/build-using-cache.yml).
