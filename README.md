@@ -1,4 +1,4 @@
-# GitHub Actions - Parallel Jobs
+# GitHub Actions - Parallel Jobs with Dependency Sharing
 Often times, especially in a multitenant architecture, it's expected to have one repository from where multiple builds are generated for different clients / architectures etc. Running separate actions for each of these different clients can be expensive and tricky if we have to download dependencies for every build again and again. 
 
 In this repo, I have solved this problem using two different approaches. Although the example uses a node project, the idea can be applied to all sorts of projects. 
